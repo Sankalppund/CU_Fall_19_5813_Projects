@@ -1,0 +1,9 @@
+ss_memory_suite.c:43:12:allocate_words	16	static
+ss_memory_suite.c:80:6:free_words	16	static
+ss_memory_suite.c:99:6:display_memory	24	static
+ss_memory_suite.c:117:12:write_memory	16	static
+ss_memory_suite.c:140:12:invert_block	24	static
+ss_memory_suite.c:168:12:write_pattern	40	static
+ss_memory_suite.c:202:12:verify_pattern	40	static
+ss_memory_suite.c:238:12:get_address	24	static
+ss_memory_suite.c:253:6:status_return	16	static

@@ -1,0 +1,11 @@
+fsl_gpio.h:175:20:GPIO_SetPinsOutput	16	static
+fsl_gpio.h:186:20:GPIO_ClearPinsOutput	16	static
+fsl_rtc.h:308:20:RTC_StartTimer	16	static
+ss_led_control.c:46:6:LED_Initialize	8	static
+ss_led_control.c:53:6:LED_OFF	8	static
+ss_led_control.c:61:5:delay	24	static
+ss_led_control.c:79:6:RTC_Initialize	8	static
+ss_led_control.c:97:6:RTC_Call	40	static
+ss_led_control.c:108:6:LED_RED	8	static
+ss_led_control.c:116:6:LED_GREEN	8	static
+ss_led_control.c:124:6:LED_BLUE	8	static
