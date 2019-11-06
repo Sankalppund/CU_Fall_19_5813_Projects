@@ -1,0 +1,3 @@
+fsl_lptmr.c:83:6:LPTMR_Init	8	static
+fsl_lptmr.c:108:6:LPTMR_Deinit	0	static
+fsl_lptmr.c:125:6:LPTMR_GetDefaultConfig	0	static

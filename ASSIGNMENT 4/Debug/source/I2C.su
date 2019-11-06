@@ -1,0 +1,7 @@
+I2C.c:21:6:I2C_Config	8	static
+I2C.c:58:6:I2C_Write_Data	24	static
+I2C.c:88:5:I2C_Read_Data	32	static
+I2C.c:151:6:alert_event	16	static
+I2C.c:168:6:complete_event	16	static
+I2C.c:185:5:check_disconnect_event	16	static
+I2C.c:221:6:I2C_Read_Dat	16	static

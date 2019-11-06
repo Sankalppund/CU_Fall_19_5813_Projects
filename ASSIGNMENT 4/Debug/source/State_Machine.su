@@ -1,0 +1,14 @@
+State_Machine.c:33:6:state_machine	8	static
+State_Machine.c:100:6:table_state_machine	32	static
+State_Machine.c:123:7:Transition_in_Table	32	static
+State_Machine.c:152:7:Temp_Reading_State	8	static
+State_Machine.c:190:14:Temp_Reading_Func_for_Event	8	static
+State_Machine.c:229:7:Average_Wait_State	8	static
+State_Machine.c:280:14:Average_Wait_Func_for_Event	8	static
+State_Machine.c:342:7:Temp_Alert_State	8	static
+State_Machine.c:370:14:Temp_Alert_Func_for_Event	8	static
+State_Machine.c:401:7:Disconnected_State	8	static
+State_Machine.c:419:14:Disconnected_State_Func_for_Event	8	static
+State_Machine.c:436:7:End_State	8	static
+State_Machine.c:455:14:End_State_Func_for_Event	8	static
+State_Machine.c:475:6:Resetting_Global_Var	8	static

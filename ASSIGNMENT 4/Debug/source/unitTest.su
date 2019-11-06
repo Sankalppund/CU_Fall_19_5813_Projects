@@ -1,0 +1,11 @@
+unitTest.c:22:6:Test_Case_1_isEqual	8	static
+unitTest.c:38:6:Test_Case_2_isEqual	8	static
+unitTest.c:53:6:Test_Case_3_isBitSet	16	static
+unitTest.c:69:6:Test_Case_4_is8BitSet	16	static
+unitTest.c:85:6:Test_Case_5_is8Bit	16	static
+unitTest.c:102:6:Test_Case_6_isEqual	24	static
+unitTest.c:120:6:Test_Case_7_isEqual	24	static
+unitTest.c:137:6:Test_Case_8_isNull	16	static
+unitTest.c:155:6:Test_Case_9_isEqual	24	static
+unitTest.c:172:6:Test_Case_10_isEqual	24	static
+unitTest.c:190:6:Test_Script	8	static
