@@ -20,7 +20,9 @@
 #include "Systick_timer.h"
 #include "circular_buffer.h"
 
-/* Enter No of elements to be added in circular buffer */
+/* Enter Buffer size to be generated and No of elements to be added in circular buffer */
+
+#define BUFFER_SIZE (100)
 
 #define NO_OF_ELEMENTS (100)
 

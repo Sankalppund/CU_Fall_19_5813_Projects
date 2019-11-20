@@ -82,7 +82,7 @@ int main(void) {
 
 	/* Initializing a buffer*/
 
-	TSA=(circular_buffer*)initialize_buffer(100);
+	TSA=(circular_buffer*)initialize_buffer(BUFFER_SIZE);
 
 	/* Enabling Logging */
 
