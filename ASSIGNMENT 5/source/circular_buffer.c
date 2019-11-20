@@ -8,6 +8,7 @@
  * ref: https://www.geeksforgeeks.org/dynamic-memory-allocation-in-c-using-malloc-calloc-free-and-realloc/
  * ref: https://embedjournal.com/implementing-circular-buffer-embedded-c/
  * ref: https://www.geeksforgeeks.org/g-fact-66/
+ * ref: https://www.geeksforgeeks.org/memset-c-example/
  */
 
 /*Header files*/
@@ -23,7 +24,6 @@
 uint16_t count=0;
 int16_t old_data=0;
 int16_t resize = 1;
-
 
 /*
  * Function Name - initialize_buffer
@@ -79,6 +79,12 @@ cir_buff_err add_new(circular_buffer*cir_ptr, uint8_t new_item)
 		{
 
 			cir_ptr->buffer[cir_ptr->head] = new_item;
+
+			//sprintf(forreport_2, "Adding New Number");
+
+			//print_string(forreport_2);
+
+			//Log(LOG_TEST, ADD_NEW, "New number added");
 
 			count++;
 
@@ -224,7 +230,6 @@ cir_buff_err destroy_buffer(circular_buffer*cir_ptr)
 	}
 	else
 	{
-		//free(cir_ptr);
 
 		memset(cir_ptr->buffer,0,cir_ptr->head);
 
@@ -279,6 +284,7 @@ cir_buff_err verify_initilization(circular_buffer*cir_ptr)
 
 cir_buff_err resize_buffer(circular_buffer*cir_ptr)
 {
+
 	cir_ptr->buffer = (int8_t*)realloc(cir_ptr->buffer, (cir_ptr->length)*2);
 
 	cir_ptr->length = (cir_ptr->length)*2;

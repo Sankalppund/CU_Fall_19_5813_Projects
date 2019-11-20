@@ -106,7 +106,7 @@ void Overfill_test (void)
 	  UCUNIT_TestcaseBegin("Verify Overfill Test");
 	  circular_buffer* Buffer_Test = (circular_buffer*)initialize_buffer(5);
 	  cir_buff_err Buffer_Test_enum;
-	  for(int i=0;i<110;i++)
+	  for(int i=0;i<6;i++)
 	  {
 		  Buffer_Test_enum = add_new(Buffer_Test, i);
 	  }
@@ -161,13 +161,13 @@ void Resize_Buffer_Test(void)
 {
 
 	  UCUNIT_TestcaseBegin("Resize Buffer Test");
-	  circular_buffer* Buffer_Test = (circular_buffer*)initialize_buffer(5);
+	  circular_buffer* Buffer_Test = (circular_buffer*)initialize_buffer(10);
 	  cir_buff_err Buffer_Test_enum;
-	  for(int i=0;i<20;i++)
+	  for(int i=0;i<12;i++)
 	  {
 		  Buffer_Test_enum = add_new(Buffer_Test, i);
 	  }
-	  UCUNIT_CheckIsEqual(ADDITION_AFTER_RESIZE_SUCCESS, Buffer_Test_enum);
+	  UCUNIT_CheckIsEqual(ADDITION_BUFFER_SUCCESS, Buffer_Test_enum);
 	  UCUNIT_TestcaseEnd();
 	  free(Buffer_Test);
 	  UCUNIT_WriteSummary();
@@ -185,9 +185,9 @@ void Buffer_Full_Test(void)
 	  UCUNIT_TestcaseBegin("Buffer Full Test");
 	  circular_buffer* Buffer_Test = (circular_buffer*)initialize_buffer(5);
 	  cir_buff_err Buffer_Test_enum;
-	  for(int i=0;i<100;i++)
+	  for(int i=0;i<11;i++)
 	  {
-		  Buffer_Test_enum = add_new(Buffer_Test, i);
+		 Buffer_Test_enum = buffer_full_check(i);
 	  }
 	  UCUNIT_CheckIsEqual(BUFFER_FULL, Buffer_Test_enum);
 	  UCUNIT_TestcaseEnd();

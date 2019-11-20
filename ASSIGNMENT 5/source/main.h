@@ -22,9 +22,9 @@
 
 /* Enter Buffer size to be generated and No of elements to be added in circular buffer */
 
-#define BUFFER_SIZE (100)
+#define BUFFER_SIZE (10)
 
-#define NO_OF_ELEMENTS (100)
+#define NO_OF_ELEMENTS (10)
 
 /*macro functions to disable and enable interrupts*/
 
