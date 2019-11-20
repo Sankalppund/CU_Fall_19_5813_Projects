@@ -7,8 +7,8 @@ source/UART.o source/UART.d: ../source/UART.c ../CMSIS/MKL25Z4.h \
  ../CMSIS/MKL25Z4_features.h ../drivers/fsl_clock.h \
  ../drivers/fsl_common.h ../drivers/fsl_gpio.h ../board/peripherals.h \
  ../board/pin_mux.h ../board/clock_config.h ../source/logger.h \
- ../source/Systick_timer.h ../utilities/fsl_debug_console.h \
- ../source/char_count.h
+ ../source/Systick_timer.h ../source/char_count.h \
+ ../source/ss_led_control.h
 
 ../CMSIS/MKL25Z4.h:
 
@@ -56,6 +56,6 @@ source/UART.o source/UART.d: ../source/UART.c ../CMSIS/MKL25Z4.h \
 
 ../source/Systick_timer.h:
 
-../utilities/fsl_debug_console.h:
-
 ../source/char_count.h:
+
+../source/ss_led_control.h:

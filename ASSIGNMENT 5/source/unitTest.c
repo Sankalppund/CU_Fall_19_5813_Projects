@@ -7,17 +7,17 @@
  *      Reference - https://mcuoneclipse.com/2018/08/26/tutorial-μcunit-a-unit-test-framework-for-microcontrollers/
  */
 
+/* Header files*/
 
 #include "unitTest.h"
 
-
-
 /*
- * Function Name - Test_Case_1_isEqual
- * Description - This function is used to test whether the Post_test status is success/failure
+ * Function Name - Buffer_Creation
+ * Description - This function is used to test whether circular buffer initialization is success or failed.
  * Inputs - none
  * Return Value - none
  */
+
 void Buffer_Creation(void)
 {
 	  UCUNIT_TestcaseBegin("Buffer Creation Test");
@@ -31,11 +31,12 @@ void Buffer_Creation(void)
 
 
 /*
- * Function Name - Test_Case_2_isEqual
- * Description - This function is used to test whether the Post_test status is success/failure
+ * Function Name - Data_Access_Test
+ * Description - This function is used to test whether the data access from circular buffer is success of failed.
  * Inputs - none
  * Return Value - none
  */
+
 void Data_Access_Test(void)
 {
 	  UCUNIT_TestcaseBegin("Data Access Test");
@@ -48,11 +49,12 @@ void Data_Access_Test(void)
 }
 
 /*
- * Function Name - Test_Case_3_isBitSet
- * Description - This function is used to test whether a bit is set in the result
+ * Function Name - Verify_Wrap_Remove_test
+ * Description - This function is used to test whether wrap remove from circular buffer is success or failed
  * Inputs - none
  * Return Value - none
  */
+
 void Verify_Wrap_Remove_test (void)
 {
 	  UCUNIT_TestcaseBegin("Verify Wrap Remove Test");
@@ -71,11 +73,10 @@ void Verify_Wrap_Remove_test (void)
 	  free(Buffer_Test);
 	  UCUNIT_WriteSummary();
 }
-//
-//
+
 /*
- * Function Name - Test_Case_4_is8Bit
- * Description - This function is used to test whether a particular bit is set in the returned value
+ * Function Name - Verify_Wrap_Add_test
+ * Description - This function is used to test whether wrap add to circular buffer is success or failed.
  * Inputs - none
  * Return Value - none
  */
@@ -93,11 +94,10 @@ void Verify_Wrap_Add_test (void)
 	  free(Buffer_Test);
 	  UCUNIT_WriteSummary();
 }
-//
-//
+
 /*
- * Function Name - Test_Case_5_is8Bit
- * Description - This function is used to test whether the returned address's value is 8 bit value
+ * Function Name - Overfill_test
+ * Description - This function is used to test that circular buffer fails when too many items are added
  * Inputs - none
  * Return Value - none
  */
@@ -115,17 +115,16 @@ void Overfill_test (void)
 	  free(Buffer_Test);
 	  UCUNIT_WriteSummary();
 }
-//
-//
+
 /*
- * Function Name - Test_Case_6_isEqual
- * Description - This function is used to test whether the return status is success/failure
+ * Function Name - Overempty_test
+ * Description - This function is test that circular buffer fails to remove an item when circular buffer is empty
  * Inputs - none
  * Return Value - none
  */
 void Overempty_test(void)
 {
-	  UCUNIT_TestcaseBegin("Verify Overfill Test");
+	  UCUNIT_TestcaseBegin("Verify Overempty Test");
 	  circular_buffer* Buffer_Test = (circular_buffer*)initialize_buffer(5);
 	  cir_buff_err Buffer_Test_enum =  remove_old(Buffer_Test);
 	  UCUNIT_CheckIsEqual(REMOVE_BUFFER_FAILED, Buffer_Test_enum);
@@ -134,11 +133,10 @@ void Overempty_test(void)
 	  UCUNIT_WriteSummary();
 }
 
-//
-//
+
 /*
- * Function Name - Test_Case_7_isEqual
- * Description - This function is used to test whether the return status is success/failure
+ * Function Name - Destroy_Buffer_Test
+ * Description - This function is used to test whether circular buffer reset is success or failed.
  * Inputs - none
  * Return Value - none
  */
@@ -152,11 +150,10 @@ void Destroy_Buffer_Test(void)
 	  free(Buffer_Test);
 	  UCUNIT_WriteSummary();
 }
-//
-//
+
 /*
- * Function Name - Test_Case_8_isNull
- * Description - This function is used to test whether the returned address in NULL
+ * Function Name - Resize_Buffer_Test
+ * Description - This function is used to test whether circular buffer resizes as soon as more data is added than initialized length.
  * Inputs - none
  * Return Value - none
  */
@@ -176,11 +173,10 @@ void Resize_Buffer_Test(void)
 	  UCUNIT_WriteSummary();
 
 }
-//
-//
+
 /*
  * Function Name - Buffer_Full_Test
- * Description - This function is used to test whether the return status is true/false
+ * Description - This function is used to test whether circular buffer full.
  * Inputs - none
  * Return Value - none
  */
@@ -198,11 +194,10 @@ void Buffer_Full_Test(void)
 	  free(Buffer_Test);
 	  UCUNIT_WriteSummary();
 }
-//
-//
+
 /*
  * Function Name - Buffer_Empty_Test
- * Description - This function is used to test whether the buffer is empty
+ * Description - This function is used to test whether the circular buffer is empty
  * Inputs - none
  * Return Value - none
  */
@@ -216,8 +211,7 @@ void Buffer_Empty_Test(void)
 	  free(Buffer_Test);
 	  UCUNIT_WriteSummary();
 }
-//
-//
+
 /*
  * Function Name - Test_Script
  * Description - This function is used to run a test script of 10 test cases
@@ -238,6 +232,6 @@ void Test_Script(void)
 	 Resize_Buffer_Test ();
 	 Buffer_Full_Test();
 	 Buffer_Empty_Test();
-	 UCUNIT_Shutdown();
+	 UCUNIT_Shutdown(); /*  function to stop the execution of the tests */
 }
 

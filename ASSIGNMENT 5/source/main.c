@@ -29,21 +29,23 @@
  */
 
 /**
- * @file    PES_5813_Project_5.c
+ * @file    Main.c
  * @brief   Application entry point.
+ *
+ * Auther: sankalp pund & saket penurkar
+ *
  */
+
+/*Header files*/
+
 #include "main.h"
 #include "uart.h"
 #include "char_count.h"
 
 
-/* TODO: insert other include files here. */
-
-/* TODO: insert other definitions and declarations here. */
-
+/* Global Variables*/
 
 extern uint16_t count;
-
 
 extern int received_flag;
 
@@ -62,17 +64,27 @@ int main(void) {
 
 	BOARD_InitBootPins();
 	BOARD_InitBootClocks();
+
+	/* Initializing Systick Timer */
+
 	Init_SysTick();
+
+	/* Initializing LEDs */
+
 	LED_Initialize();
 
 #if (TEST_MODE)
+	/* Init board hardware. */
 	BOARD_InitBootPeripherals();
 	/* Init FSL debug console. */
 	BOARD_InitDebugConsole();
 #endif
 
+	/* Initializing a buffer*/
+
 	TSA=(circular_buffer*)initialize_buffer(100);
 
+	/* Enabling Logging */
 
 #if (LOG_ENABLE)
 	Log_enable();   /*  Calling this function to enable logging */
@@ -86,8 +98,14 @@ int main(void) {
 #endif
 
 #if (!TEST_MODE)
+
+	/* Initializing UART0 */
+
 	Init_UART0(BAUD_RATE);
+
 #endif
+
+	/* Operating Application Mode */
 
 #if (APPLICATION_MODE)
 
@@ -96,33 +114,34 @@ int main(void) {
 
 #if (USE_UART_INTERRUPTS)
 
-		//add_new(TSA, c_recieve);
-
-		if(TSA->buffer[TSA->head - 1]=='.')
+		if(TSA->buffer[TSA->head - 1]=='=')
 		{
-			{
 
-		     	memset(TSA->buffer,0,TSA->head);
+			    destroy_buffer(TSA);
 
-				sprintf(forreport_1, "\r\nGenerating Report");
+				sprintf(forreport_1, "\r\nGenerating Report\n");
 
 				print_string(forreport_1);
 
-				break;
-			}
+				application_report();
+
 		}
 
-
 		interrupt_application(&(TSA->buffer[TSA->head - 1]));
-		//remove_old(TSA);
-		//TSA->buffer[TSA->head]=0;
 
 #else
 		char rc = uart_receive();
 
-		if(rc == '.')
+		if(rc == '=')
 		{
-			break;
+
+			sprintf(forreport_1, "\r\nGenerating Report\n");
+
+			print_string(forreport_1);
+
+			application_report();
+
+
 		}
 
 		polling_application(&rc);
@@ -132,21 +151,14 @@ int main(void) {
 
 	}
 
-	application_report();
-
-//	remove_old(TSA);
-//
-//	destroy_buffer(TSA);
-
-	free(TSA);
-
 	return 0;
 
 
 #endif
 
+	/* Operating ECHO Mode */
 
-#if (ECHO_MODE)  //echo mode start
+#if (ECHO_MODE)
 
 	while(1)
 	{
@@ -167,17 +179,18 @@ int main(void) {
 
 #endif
 
+
+	/* Operating TEST Mode */
+
 #if (TEST_MODE)
 
-	//create buffer here
-
 	Test_Script();             // Run the Test Script
+
+	LED_OFF();
 
 	return 0;
 
 #endif
 
-
-	//free(circular_pointer->buffer);
 }
 

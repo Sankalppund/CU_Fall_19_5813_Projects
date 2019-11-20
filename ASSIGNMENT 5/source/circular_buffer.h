@@ -8,7 +8,12 @@
 #ifndef CIRCULAR_BUFFER_H_
 #define CIRCULAR_BUFFER_H_
 
+/* Header files*/
+
 #include <stdint.h>
+
+
+/* Structure for Circular buffer */
 
 typedef struct{
 
@@ -20,6 +25,7 @@ typedef struct{
 }circular_buffer;
 
 
+/*Enumeration for error checking*/
 
 typedef enum cir_buff_err
 {
@@ -47,6 +53,8 @@ typedef enum cir_buff_err
 
 }cir_buff_err;
 
+/* Function Prototype */
+
 circular_buffer* initialize_buffer(uint8_t);
 cir_buff_err add_new(circular_buffer*,uint8_t);
 cir_buff_err remove_old(circular_buffer*);
@@ -56,4 +64,6 @@ cir_buff_err resize_buffer(circular_buffer*);
 cir_buff_err destroy_buffer(circular_buffer*);
 cir_buff_err buffer_validation(circular_buffer*);
 cir_buff_err verify_initilization(circular_buffer*);
+
+
 #endif /* CIRCULAR_BUFFER_H_ */

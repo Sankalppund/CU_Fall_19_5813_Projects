@@ -16,6 +16,7 @@
 
 
 /* Global Variable for logger.c */
+
 static bool log_var = false;
 Logging_Level_m LogLevel;
 Function_Name_m FunctioName;
@@ -71,6 +72,7 @@ bool Log_status()
  * Inputs - The log level as an enum
  * Return Value - none
  */
+
 void Log_level(Logging_Level_m LogLevel)
 {
 	if (LogLevel == LOG_TEST)
@@ -96,6 +98,7 @@ void Log_level(Logging_Level_m LogLevel)
  * Inputs - The log level, the function enum, the text message
  * Return Value - none
  */
+
 void Log(Logging_Level_m level, Function_Name_m Function_Name, const char * message)
 {
 
@@ -167,6 +170,7 @@ void Log(Logging_Level_m level, Function_Name_m Function_Name, const char * mess
  * Inputs -
  * Return Value -
  */
+
 const char* Function_Printed_in_Log(Function_Name_m FuncName)
 {
 	if (MAIN == FuncName)
@@ -326,6 +330,7 @@ void Log_integer(int Int_Var)
  * Inputs - none
  * Return Value - pointer to the timestamp string
  */
+
 void time_stamp()
 {
 	char time_buff[14] = {0};

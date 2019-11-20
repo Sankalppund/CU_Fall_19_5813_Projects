@@ -16,7 +16,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-//#include "fsl_debug_console.h"
 #include "Systick_timer.h"
 
 /* Logger Functionality for KL25Z */
@@ -26,6 +25,8 @@
 #define SEC_IN_HOUR (3600)
 #define SEC_IN_MIN (60)
 
+/* Enumeration to set Modes of operation*/
+
 typedef enum
 {
 	LOG_TEST,
@@ -34,7 +35,8 @@ typedef enum
 }Logging_Level_m;
 
 
-// write enum for the functions used in the program
+/* Enumeration for functions used*/
+
 typedef enum
 {
 	MAIN,
@@ -62,12 +64,11 @@ typedef enum
 	INTERRUPT_APPLICATION
 }Function_Name_m;
 
-/* Function Prototypes used in Project 3 */
+/* Function Prototypes */
+
 void Log_enable(void);
 void Log_disable(void);
 bool Log_status(void);
-
-/* Function Prototypes used in Project 4 */
 void Log_level(Logging_Level_m);    // function to set the log level
 void Log(Logging_Level_m, Function_Name_m, const char *);
 void Log_integer(int Int_Var);

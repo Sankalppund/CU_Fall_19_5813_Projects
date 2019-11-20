@@ -8,7 +8,6 @@ source/unitTest.o source/unitTest.d: ../source/unitTest.c \
  ../drivers/fsl_common.h ../drivers/fsl_gpio.h ../board/peripherals.h \
  ../board/pin_mux.h ../board/clock_config.h ../CMSIS/MKL25Z4.h \
  ../source/logger.h ../source/Systick_timer.h ../source/circular_buffer.h \
- ../utilities/fsl_debug_console.h \
  ../source/../ucunit-master/v1.0.1/uCUnit-v1.0.h \
  ../source/../ucunit-master/v1.0.1/System.h
 
@@ -57,8 +56,6 @@ source/unitTest.o source/unitTest.d: ../source/unitTest.c \
 ../source/Systick_timer.h:
 
 ../source/circular_buffer.h:
-
-../utilities/fsl_debug_console.h:
 
 ../source/../ucunit-master/v1.0.1/uCUnit-v1.0.h:
 

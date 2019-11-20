@@ -7,8 +7,10 @@
  * ref: https://www.nxp.com/webapp/sps/download/preDownload.jsp
  *
  * ref: https://github.com/alexander-g-dean/ESF/tree/master/Code/Chapter_8/Serial-Demo/src
+ *
  */
 
+/*Global Variables*/
 
 #include "MKL25Z4.h"
 #include "UART.h"
@@ -16,6 +18,9 @@
 #include "main.h"
 #include "logger.h"
 #include "char_count.h"
+#include "ss_led_control.h"
+
+/* Global Variables*/
 
 extern circular_buffer* rec_ptr;
 
@@ -34,12 +39,13 @@ char c_recieve=0;
  * Description - This function is used to initialize UART0
  * Inputs - the baud rate of the UART communication
  * Return Value - none
+ * ref: https://github.com/alexander-g-dean/ESF/tree/master/Code/Chapter_8/Serial-Demo/src
  */
 
 void Init_UART0(uint32_t baud_rate) {
 
-		LED_OFF();
-		LED_BLUE();
+	LED_OFF();
+	LED_BLUE();
 
 	uint16_t sbr;
 	uint8_t temp;
@@ -73,7 +79,7 @@ void Init_UART0(uint32_t baud_rate) {
 	UART0->C1 = UART0_C1_LOOPS(0) | UART0_C1_M(0) | UART0_C1_PE(0);
 	// Don't invert transmit data, don't enable interrupts for errors
 	UART0->C3 = UART0_C3_TXINV(0) | UART0_C3_ORIE(0)| UART0_C3_NEIE(0)
-											| UART0_C3_FEIE(0) | UART0_C3_PEIE(0);
+																	| UART0_C3_FEIE(0) | UART0_C3_PEIE(0);
 
 	// Clear error flags
 	UART0->S1 = UART0_S1_OR(1) | UART0_S1_NF(1) | UART0_S1_FE(1) | UART0_S1_PF(1);
@@ -108,10 +114,9 @@ void Init_UART0(uint32_t baud_rate) {
 /*
  * Function Name - uart_transmit
  * Description - This function is used to transmit a character over UART
- * Inputs - the character to be transfered
+ * Inputs - the character to be transfered.
  * Return Value - none
  */
-
 
 void uart_transmit(char char_val)
 {
@@ -138,10 +143,11 @@ char uart_receive()
 
 /*
  * Function Name - transmitter_wait
- * Description - This function is used to wait till the data is ready to be sent
+ * Description - This function is used to check whether the transmitter is available to accept a new character for transmission
  * Inputs - none
  * Return Value - none
  */
+
 void transmitter_wait()
 {
 	while(!(UART0->S1 & UART_S1_TDRE_MASK));
@@ -149,14 +155,13 @@ void transmitter_wait()
 
 /*
  * Function Name - uart_transmit
- * Description - This function is used to block transmission over UART till the transmit data is ready
+ * Description - This function is used to transmit data over UART as soon as data to be sent is ready.
  * Inputs - none
  * Return Value - none
  */
+
 void uart_transmit(char char_val)
 {
-	//LED_OFF();
-
 	transmitter_wait();
 
 	UART0->D = char_val;
@@ -166,23 +171,30 @@ void uart_transmit(char char_val)
 
 
 /*
- * Function Name - uart_transmit
- * Description - This function is used to block transmission over UART till the transmit data is ready
+ * Function Name - receiver_wait
+ * Description - This function is used to check whether the receiver has a new character to receive
  * Inputs - none
  * Return Value - none
  */
+
 void receiver_wait()
 {
-	//LED_OFF();
 	LED_BLUE();
-	while(!(UART0->S1 & UART_S1_RDRF_MASK))
-		{
 
-		}
-	//LED_BLUE();
-	//LED_OFF();
+	while(!(UART0->S1 & UART_S1_RDRF_MASK))
+	{
+
+	}
+
 
 }
+
+/*
+ * Function Name - uart_receive
+ * Description - This function is used to receive data over UART.
+ * Inputs - none
+ * Return Value - none
+ */
 
 char uart_receive()
 {
@@ -196,20 +208,30 @@ char uart_receive()
 
 #endif
 
+/*
+ * Function Name - print_string
+ * Description - This function is to print string data on terminal using UART0
+ * Inputs - pointer to character
+ * Return Value - none
+ */
 
 void print_string(char *string)
 {
 
 	while(*string != '\0')
 	{
-		//transmitter_wait();
-
 		uart_transmit(*string);
 
 		string++;
 	}
 }
 
+/*
+ * Function Name - print_string
+ * Description - This function is to print numeric data on terminal using UART0
+ * Inputs - pointer to character
+ * Return Value - none
+ */
 
 void print_num(uint16_t num)
 {
@@ -221,18 +243,19 @@ void print_num(uint16_t num)
 }
 
 
-void add_cb(char ch)
-{
-	add_new(rec_ptr, ch);
-}
-
-
+/*
+ * Function Name - UART0_IRQHandler
+ * Description - This function is an ISR for UART0 Interrupt.
+ * Inputs - none
+ * Return Value - none
+ */
 
 void UART0_IRQHandler()
 {
 
 	__disable_irq();
 
+	/* Error checking */
 
 	if (UART0->S1 & (UART_S1_OR_MASK |UART_S1_NF_MASK |
 			UART_S1_FE_MASK | UART_S1_PF_MASK))
@@ -240,40 +263,57 @@ void UART0_IRQHandler()
 		LED_OFF();
 		LED_RED();
 
-		// clear the error flags
+		/*clear the error flags*/
+
 		UART0->S1 |= UART0_S1_OR_MASK | UART0_S1_NF_MASK |
 				UART0_S1_FE_MASK | UART0_S1_PF_MASK;
 
-		// read the data register to clear RDRF
+		/*read the data register to clear RDRF*/
+
 		c_recieve= UART0->D;
 
 	}
 
+	/* Transmitter interrupt received*/
+
 	if(UART0->S1 & UART0_S1_TDRE_MASK)
 	{
-		UART0->C2 &= ~(UART0_C2_TIE_MASK);
 
+		/* Clearing the Transmitter interrupt*/
+
+		UART0->C2 &= ~(UART0_C2_TIE_MASK);
 	}
+
+	/* Receiver interrupt received */
 
 	if(UART0->S1 & UART0_S1_RDRF_MASK)
 	{
 		LED_BLUE();
+
+		/*Clearing the receiver interrupt by receiving the data*/
+
 		c_recieve= UART0->D;
 
 		INT_received_flag = 1;
 
-#if(APPLICATION_MODE)
+#if(APPLICATION_MODE&&USE_UART_INTERRUPTS)
+
+		/* Adding the received character from UART to circular buffer */
+
 		add_new(TSA, c_recieve);
 #endif
 
 	}
 
-
-
 	__enable_irq();
 }
 
-
+/*
+ * Function Name - polling_echo
+ * Description - This function is used to transmit back the received data from PC terminal in polling mode
+ * Inputs - none
+ * Return Value - none
+ */
 
 void polling_echo()
 {
@@ -283,7 +323,6 @@ void polling_echo()
 	{
 		received_flag=0;
 
-		LED_OFF();
 		LED_GREEN();
 
 		uart_transmit(a);
@@ -291,21 +330,31 @@ void polling_echo()
 }
 
 
+/*
+ * Function Name - interrupt_echo
+ * Description - This function is used to transmit back the received data from PC terminal in interrupt mode
+ * Inputs - character value
+ * Return Value - none
+ */
+
 
 void interrupt_echo(char a)
 {
 
-	//char a = uart_receive();
-
 	if(INT_received_flag==1)
 	{
-		//add_new(TSA, ch_to_send);
-
 		INT_received_flag=0;
 
 		uart_transmit(a);
 	}
 }
+
+/*
+ * Function Name - polling_application
+ * Description - This function is used to maintain the count of received character in polling mode.
+ * Inputs - pointer to character
+ * Return Value - none
+ */
 
 void polling_application(uint8_t* chr)
 {
@@ -314,11 +363,15 @@ void polling_application(uint8_t* chr)
 		received_flag=0;
 
 		char_count(chr);
-
 	}
 }
 
-
+/*
+ * Function Name - interrupt_application
+ * Description - This function is used to maintain the count of received character in interrupt mode.
+ * Inputs - pointer to character
+ * Return Value - none
+ */
 void interrupt_application(uint8_t* chr)
 {
 

@@ -7,8 +7,7 @@ source/circular_buffer.o source/circular_buffer.d: \
  ../CMSIS/MKL25Z4_features.h ../drivers/fsl_clock.h \
  ../drivers/fsl_common.h ../drivers/fsl_gpio.h ../board/peripherals.h \
  ../board/pin_mux.h ../board/clock_config.h ../CMSIS/MKL25Z4.h \
- ../source/logger.h ../source/Systick_timer.h \
- ../utilities/fsl_debug_console.h
+ ../source/logger.h ../source/Systick_timer.h
 
 ../source/circular_buffer.h:
 
@@ -53,5 +52,3 @@ source/circular_buffer.o source/circular_buffer.d: \
 ../source/logger.h:
 
 ../source/Systick_timer.h:
-
-../utilities/fsl_debug_console.h:

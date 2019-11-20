@@ -1,2 +1,2 @@
-char_count.c:19:6:application_report	112	static
-char_count.c:43:6:char_count	16	static
+char_count.c:30:6:application_report	120	static
+char_count.c:59:6:char_count	16	static

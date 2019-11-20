@@ -13,7 +13,6 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "MKL25Z4.h"
-#include "fsl_debug_console.h"
 #include "fsl_gpio.h"
 #include "fsl_rtc.h"
 #include "ss_led_control.h"
@@ -92,7 +91,7 @@ void LED_RED()
 	GPIO_SetPinsOutput(BOARD_LED_GPIO_G, 1u << BOARD_LED_GPIO_PIN_G);
 	GPIO_SetPinsOutput(BOARD_LED_GPIO_B, 1u << BOARD_LED_GPIO_PIN_B);
 	GPIO_ClearPinsOutput(BOARD_LED_GPIO_R, 1u << BOARD_LED_GPIO_PIN_R);
-	//	delay(100);
+	delay(100);
 }
 
 /*

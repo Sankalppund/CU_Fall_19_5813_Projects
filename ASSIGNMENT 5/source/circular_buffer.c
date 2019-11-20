@@ -10,11 +10,15 @@
  * ref: https://www.geeksforgeeks.org/g-fact-66/
  */
 
+/*Header files*/
 
 #include "circular_buffer.h"
 #include "main.h"
 #include "stddef.h"
 #include "logger.h"
+
+
+/*Global Variables*/
 
 uint16_t count=0;
 int16_t old_data=0;
@@ -31,8 +35,6 @@ int16_t resize = 1;
 circular_buffer* initialize_buffer(uint8_t data_length)
 {
 
-	LED_BLUE();
-
 	circular_buffer* circular_pointer = (circular_buffer*)malloc(sizeof(circular_buffer));
 
 	circular_pointer->buffer = (int8_t*)malloc(sizeof(data_length));
@@ -42,7 +44,6 @@ circular_buffer* initialize_buffer(uint8_t data_length)
 	circular_pointer->tail=0;
 
 	circular_pointer->length = data_length;
-
 
 	count = 0;
 
@@ -70,8 +71,6 @@ cir_buff_err add_new(circular_buffer*cir_ptr, uint8_t new_item)
 
 			cir_ptr->head = cir_ptr->buffer;
 
-			//PRINTF("\r\nNew Item inserted at position %d = %d",cir_ptr->head,cir_ptr->buffer[cir_ptr->head]);
-
 			count++;
 
 			return ADDITION_BUFFER_SUCCESS;
@@ -81,12 +80,9 @@ cir_buff_err add_new(circular_buffer*cir_ptr, uint8_t new_item)
 
 			cir_ptr->buffer[cir_ptr->head] = new_item;
 
-			Log(LOG_TEST, ADD_NEW, "\r\nNew Value Added to Circular Buffer");
-
 			count++;
 
 			cir_ptr->head++;
-
 
 			return ADDITION_BUFFER_SUCCESS;
 
@@ -101,8 +97,6 @@ cir_buff_err add_new(circular_buffer*cir_ptr, uint8_t new_item)
 			resize_buffer(cir_ptr);
 
 			cir_ptr->buffer[cir_ptr->head] = new_item;
-
-			//PRINTF("\r\nNew Item inserted at position %d = %d",cir_ptr->head,cir_ptr->buffer[cir_ptr->head]);
 
 			count++;
 
@@ -135,13 +129,9 @@ cir_buff_err remove_old(circular_buffer*cir_ptr)
 	{
 		if(cir_ptr->tail == cir_ptr->buffer + cir_ptr->length-1)
 		{
-			//old_data = cir_ptr->buffer[cir_ptr->tail];
-
 			old_data = cir_ptr->tail;
 
 			cir_ptr->tail = cir_ptr->buffer;
-
-			//PRINTF("\r\nOld item removed at position %d = %d",cir_ptr->head-count,cir_ptr->buffer[cir_ptr->head]);
 
 			count--;
 
@@ -149,11 +139,7 @@ cir_buff_err remove_old(circular_buffer*cir_ptr)
 		}
 		else
 		{
-			//old_data = cir_ptr->buffer[cir_ptr->tail];
-
 			old_data = cir_ptr->tail;
-
-			//PRINTF("\r\nOld item removed at position %d = %d %d %d",cir_ptr->head-count,old_data, cir_ptr->tail);
 
 			cir_ptr->tail++;
 
@@ -238,7 +224,9 @@ cir_buff_err destroy_buffer(circular_buffer*cir_ptr)
 	}
 	else
 	{
-		free(cir_ptr);
+		//free(cir_ptr);
+
+		memset(cir_ptr->buffer,0,cir_ptr->head);
 
 		return DESTROY_BUFFER_SUCCESS;
 	}
@@ -291,9 +279,6 @@ cir_buff_err verify_initilization(circular_buffer*cir_ptr)
 
 cir_buff_err resize_buffer(circular_buffer*cir_ptr)
 {
-
-	//PRINTF("\r\nResizing the buffer after overfill error.");
-
 	cir_ptr->buffer = (int8_t*)realloc(cir_ptr->buffer, (cir_ptr->length)*2);
 
 	cir_ptr->length = (cir_ptr->length)*2;

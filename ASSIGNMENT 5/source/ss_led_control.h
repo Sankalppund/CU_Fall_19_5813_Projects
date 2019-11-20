@@ -19,6 +19,8 @@
 #define BOARD_LED_GPIO_B BOARD_LED_BLUE_GPIO
 #define BOARD_LED_GPIO_PIN_B BOARD_LED_BLUE_GPIO_PIN
 
+/* Function Prototype */
+
 void LED_Initialize(void);
 void LED_OFF(void);
 void LED_BLUE(void);
