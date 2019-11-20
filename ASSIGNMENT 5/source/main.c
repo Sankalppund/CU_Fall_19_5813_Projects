@@ -42,7 +42,6 @@
 #include "uart.h"
 #include "char_count.h"
 
-#include "fsl_debug_console.h"
 
 
 /* Global Variables*/
@@ -86,11 +85,6 @@ int main(void) {
 	/* Initializing a buffer*/
 
 	TSA=(circular_buffer*)initialize_buffer(BUFFER_SIZE);
-
-	for(int i=0; i<15; i++)
-	{
-		add_new(TSA, i);
-	}
 
 	/* Enabling Logging */
 
