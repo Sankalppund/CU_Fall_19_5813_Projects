@@ -6,11 +6,11 @@
  * Generated linker script file for MKL25Z128xxx4
  * Created from linkscript.ldt by FMCreateLinkLibraries
  * Using Freemarker v2.3.23
- * MCUXpresso IDE v11.0.1 [Build 2563] [2019-09-01] on Dec 2, 2019 1:53:04 AM
+ * MCUXpresso IDE v11.0.1 [Build 2563] [2019-09-01] on Dec 2, 2019 3:12:22 AM
  */
 
-INCLUDE "PES_5813_Project_6_rtos_examples_freertos_hello_Debug_library.ld"
-INCLUDE "PES_5813_Project_6_rtos_examples_freertos_hello_Debug_memory.ld"
+INCLUDE "PES_5813_Project_6_Debug_library.ld"
+INCLUDE "PES_5813_Project_6_Debug_memory.ld"
 
 ENTRY(ResetISR)
 

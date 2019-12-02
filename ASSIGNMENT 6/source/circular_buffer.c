@@ -37,7 +37,8 @@ circular_buffer* initialize_buffer(uint8_t data_length)
 
 	circular_buffer* circular_pointer = (circular_buffer*)malloc(sizeof(circular_buffer));
 
-	circular_pointer->buffer = (int8_t*)malloc(sizeof(data_length));
+	//circular_pointer->buffer = (int8_t*)malloc(sizeof(data_length));
+	circular_pointer->buffer = (uint32_t*)malloc(sizeof(data_length));
 
 	circular_pointer->head=0;
 
@@ -58,7 +59,7 @@ circular_buffer* initialize_buffer(uint8_t data_length)
  * Return Value - enum
  */
 
-cir_buff_err add_new(circular_buffer*cir_ptr, uint8_t new_item)
+cir_buff_err add_new(circular_buffer*cir_ptr, uint32_t new_item)
 {
 
 
@@ -80,6 +81,8 @@ cir_buff_err add_new(circular_buffer*cir_ptr, uint8_t new_item)
 
 			cir_ptr->buffer[cir_ptr->head] = new_item;
 
+			//PRINTF("\r\n The content is %d \n", cir_ptr->buffer[cir_ptr->head]);
+
 			//sprintf(forreport_2, "Adding New Number");
 
 			//print_string(forreport_2);
@@ -97,23 +100,23 @@ cir_buff_err add_new(circular_buffer*cir_ptr, uint8_t new_item)
 	else
 	{
 
-		if(buffer_full_check(count) == BUFFER_FULL||buffer_full_check(count) == RESIZE_BUFFER_FULL)
-		{
-
-			resize_buffer(cir_ptr);
-
-			cir_ptr->buffer[cir_ptr->head] = new_item;
-
-			count++;
-
-			cir_ptr->head++;
-
-			return ADDITION_AFTER_RESIZE_SUCCESS;
-		}
-		else
-		{
-			return ADDITION_AFTER_RESIZE_FAILED;
-		}
+//		if(buffer_full_check(count) == BUFFER_FULL||buffer_full_check(count) == RESIZE_BUFFER_FULL)
+//		{
+//
+//			resize_buffer(cir_ptr);
+//
+//			cir_ptr->buffer[cir_ptr->head] = new_item;
+//
+//			count++;
+//
+//			cir_ptr->head++;
+//
+//			return ADDITION_AFTER_RESIZE_SUCCESS;
+//		}
+//		else
+//		{
+//			return ADDITION_AFTER_RESIZE_FAILED;
+//		}
 
 		return ADDITION_BUFFER_FAILED;
 
@@ -285,7 +288,8 @@ cir_buff_err verify_initilization(circular_buffer*cir_ptr)
 cir_buff_err resize_buffer(circular_buffer*cir_ptr)
 {
 
-	cir_ptr->buffer = (int8_t*)realloc(cir_ptr->buffer, (cir_ptr->length)*2);
+	//cir_ptr->buffer = (int8_t*)realloc(cir_ptr->buffer, (cir_ptr->length)*2);
+	cir_ptr->buffer = (uint32_t*)realloc(cir_ptr->buffer, (cir_ptr->length)*2);
 
 	cir_ptr->length = (cir_ptr->length)*2;
 

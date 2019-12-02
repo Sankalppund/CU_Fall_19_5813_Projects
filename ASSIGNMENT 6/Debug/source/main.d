@@ -9,7 +9,11 @@ source/main.o source/main.d: ../source/main.c ../freertos/FreeRTOS.h \
  ../CMSIS/MKL25Z4_features.h ../utilities/fsl_debug_console.h \
  ../drivers/fsl_common.h ../drivers/fsl_clock.h ../drivers/fsl_common.h \
  ../board/board.h ../board/clock_config.h ../drivers/fsl_gpio.h \
- ../board/pin_mux.h
+ ../board/pin_mux.h ../source/circular_buffer.h ../source/frts_task.h \
+ ../source/logger.h ../source/Systick_timer.h ../source/LookUp.h \
+ ../source/ADC_DAC.h ../drivers/fsl_dac.h ../drivers/fsl_adc16.h \
+ ../board/clock_config.h ../source/dma.h ../drivers/fsl_dmamux.h \
+ ../drivers/fsl_dma.h
 
 ../freertos/FreeRTOS.h:
 
@@ -66,3 +70,27 @@ source/main.o source/main.d: ../source/main.c ../freertos/FreeRTOS.h \
 ../drivers/fsl_gpio.h:
 
 ../board/pin_mux.h:
+
+../source/circular_buffer.h:
+
+../source/frts_task.h:
+
+../source/logger.h:
+
+../source/Systick_timer.h:
+
+../source/LookUp.h:
+
+../source/ADC_DAC.h:
+
+../drivers/fsl_dac.h:
+
+../drivers/fsl_adc16.h:
+
+../board/clock_config.h:
+
+../source/dma.h:
+
+../drivers/fsl_dmamux.h:
+
+../drivers/fsl_dma.h:

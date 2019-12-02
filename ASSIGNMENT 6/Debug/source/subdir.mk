@@ -8,6 +8,8 @@ C_SRCS += \
 ../source/LookUp.c \
 ../source/Systick_timer.c \
 ../source/circular_buffer.c \
+../source/dma.c \
+../source/frts_task.c \
 ../source/logger.c \
 ../source/main.c \
 ../source/mtb.c \
@@ -19,6 +21,8 @@ OBJS += \
 ./source/LookUp.o \
 ./source/Systick_timer.o \
 ./source/circular_buffer.o \
+./source/dma.o \
+./source/frts_task.o \
 ./source/logger.o \
 ./source/main.o \
 ./source/mtb.o \
@@ -30,6 +34,8 @@ C_DEPS += \
 ./source/LookUp.d \
 ./source/Systick_timer.d \
 ./source/circular_buffer.d \
+./source/dma.d \
+./source/frts_task.d \
 ./source/logger.d \
 ./source/main.d \
 ./source/mtb.d \

@@ -40,6 +40,13 @@
 #include "board.h"
 
 #include "pin_mux.h"
+
+/********************************************************/
+#include "circular_buffer.h"
+#include "frts_task.h"
+#include "dma.h"
+/*******************************************************/
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -65,9 +72,12 @@ int main(void)
     BOARD_InitDebugConsole();
     gen_sin_sample();
     xTaskCreate(hello_task, "Hello_task", configMINIMAL_STACK_SIZE + 10, NULL, hello_task_PRIORITY, NULL);
+
+    /* Create two normal tasks here and then create one task which will be called on interrupt */
     vTaskStartScheduler();
     for (;;)
         ;
+
 }
 
 /*!

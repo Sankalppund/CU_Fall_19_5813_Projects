@@ -34,3 +34,7 @@ void gen_sin_sample()
 		}
 }
 
+uint32_t inc_sin_wave()
+{
+	return lookup_table[inc++%SIN_SAMPLES];
+}

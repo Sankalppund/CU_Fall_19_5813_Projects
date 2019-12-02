@@ -11,15 +11,17 @@
 /* Header files*/
 
 #include <stdint.h>
+#include "fsl_debug_console.h"
 
 
 /* Structure for Circular buffer */
 
 typedef struct{
 
-	int8_t* buffer;
-	uint8_t head;
-	uint8_t tail;
+	//int8_t* buffer;               // to be converted to uint32_t format
+	uint32_t * buffer;
+	uint32_t head;
+	uint32_t tail;
 	uint8_t length;
 
 }circular_buffer;
@@ -56,7 +58,7 @@ typedef enum cir_buff_err
 /* Function Prototype */
 
 circular_buffer* initialize_buffer(uint8_t);
-cir_buff_err add_new(circular_buffer*,uint8_t);
+cir_buff_err add_new(circular_buffer*,uint32_t);
 cir_buff_err remove_old(circular_buffer*);
 cir_buff_err buffer_full_check(uint16_t);
 cir_buff_err buffer_empty_check(uint16_t);

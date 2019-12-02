@@ -12,6 +12,7 @@
 #include<math.h>
 #include"fsl_debug_console.h"
 
+uint32_t inc = 0;
 
 #define SIN_SAMPLES (50)
 
@@ -27,5 +28,7 @@
 
 
 void gen_sin_sample();
+
+uint32_t inc_sin_wave();
 
 #endif /* LOOKUP_H_ */

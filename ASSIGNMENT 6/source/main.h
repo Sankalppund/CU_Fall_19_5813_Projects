@@ -10,6 +10,6 @@
 
 #define BUFFER_SIZE (10)
 
-#define NO_OF_ELEMENTS (10)
+#define NO_OF_ELEMENTS (500)
 
 #endif /* MAIN_H_ */

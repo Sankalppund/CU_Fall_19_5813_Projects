@@ -1,1 +1,2 @@
 LookUp.c:24:6:gen_sin_sample	24	static
+LookUp.c:37:10:inc_sin_wave	8	static
