@@ -1,3 +1,8 @@
-frts_task.c:14:6:soft_timer	24	static
-frts_task.c:43:6:DAC_time_callback	24	static
-frts_task.c:51:6:ADC_time_callback	24	static
+frts_task.c:35:6:soft_timer_Init	24	static
+frts_task.c:61:6:get_ticks	16	static
+frts_task.c:73:6:DAC_time_callback	24	static
+frts_task.c:94:6:DAC_time_call	16	static
+frts_task.c:116:6:DacTask	16	static
+frts_task.c:147:6:AdcTask	24	static
+frts_task.c:200:6:calculate	16	static
+frts_task.c:229:6:dsp_calculation	72	static

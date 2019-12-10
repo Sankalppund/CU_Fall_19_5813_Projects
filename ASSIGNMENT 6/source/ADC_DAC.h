@@ -8,6 +8,9 @@
 #ifndef ADC_DAC_H_
 #define ADC_DAC_H_
 
+
+/* Header Files*/
+
 #include <stdint.h>
 #include "board.h"
 #include "fsl_dac.h"
@@ -15,14 +18,15 @@
 
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "ss_led_control.h"
 
 
 
-
+/* Function Prototype*/
 
 void ADC_INIT();
 void DAC_INIT();
-uint32_t READ_ADC();
-void WRITE_DAC(uint32_t);
+uint16_t READ_ADC();
+void WRITE_DAC(uint16_t);
 
 #endif /* ADC_DAC_H_ */

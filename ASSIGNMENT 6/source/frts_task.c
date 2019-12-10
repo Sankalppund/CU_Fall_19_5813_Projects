@@ -4,14 +4,35 @@
  *  Created on: Dec 1, 2019
  *      Author: sankalp pund & saket penurkar
  *
- *  ref: freertos_swtimer SDK example
+ *  ref: freeRtos SDK example: sample_sw_timer_callback_rtos_examples_freertos_swtimer
+ *  ref: freeRtos SDK example: frdmkl25z_rtos_examples_freertos_generic
+ *
  */
 
+/*Header Files*/
 
 #include"frts_task.h"
+#include "dma.h"
 
+/*Global Variables for frts_task.c*/
 
-void soft_timer()
+uint16_t DSP_Buff[64];
+uint16_t ADC_Buff_Temp[64];
+
+extern dma_handle_t g_DMA_Handle;
+extern volatile bool g_Transfer_Done;
+extern bool DMA_Transfer;
+extern dma_transfer_config_t transferConfig;
+uint32_t cnt=0;
+
+/*
+ * Function Name - soft_timer_Init
+ * Description - This function initializes and creates software timer.
+ * Inputs - none
+ * Return Value - none
+ */
+
+void soft_timer_Init()
 {
 	TimerHandle_t DAC_TimerHandle = NULL;
 
@@ -26,40 +47,224 @@ void soft_timer()
 
 	xTimerStart(ADC_TimerHandle, 0);
 
+	/* Start scheduling. */
 
-	/* Initializing a circular buffer*/
-
-	ADC_Buff=(circular_buffer*)initialize_buffer(BUFFER_SIZE);
-
-	DSP_Buff=(circular_buffer*)initialize_buffer(BUFFER_SIZE);
-
-    /* Start scheduling. */
-
-    vTaskStartScheduler();
+	vTaskStartScheduler();
 }
 
+/*
+ * Function Name - get_ticks
+ * Description - This function is callback function for software timer.
+ * Inputs - TimerHandle_t
+ * Return Value - none
+ */
+void get_ticks(TimerHandle_t xTimer)
+{
+	cnt++;
+}
 
+/*
+ * Function Name - DAC_time_callback
+ * Description - This function is a callback function for software timer.
+ * Inputs - TimerHandle_t
+ * Return Value - none
+ */
 
 void DAC_time_callback(TimerHandle_t xTimer)
 {
-	uint32_t sin_sample = inc_sin_wave();
+	Log(LOG_DEBUG, DMA_CALLBACK, "Inside DAC Timer Callback");
+
+	uint16_t sin_sample = inc_sin_wave();
 
 	WRITE_DAC(sin_sample);
+
+	LED_BLUE();
+	LED_OFF();
+
+
 }
 
+/*
+ * Function Name - DAC_time_call
+ * Description - This function takes value from lookup table and writes to DAC.
+ * Inputs - none
+ * Return Value - none
+ */
 
-void ADC_time_callback(TimerHandle_t xTimer)
+void DAC_time_call()
 {
-	uint32_t adc_read_val = READ_ADC();
 
-	add_new(ADC_Buff, adc_read_val);
+	cnt++;
 
-	if(buffer_full_check(count) == BUFFER_FULL)
+	LED_GREEN();
+	uint16_t sin_sample = inc_sin_wave();
+
+	WRITE_DAC(sin_sample);
+	LED_OFF();
+}
+
+/*
+ * Function Name - DacTask
+ * Description - FreeRTOS Task to periodically (every .1 seconds)
+ * change the value on DAC0 from the lookup table buffer of DAC register values.
+ * Inputs - pointer to void
+ * Return Value - none
+ *
+ * ref: freeRtos SDK example: frdmkl25z_rtos_examples_freertos_generic
+ */
+
+void DacTask(void* pointer)
+{
+
+
+	while(1)
 	{
-		/* Initiate DMA Transfer here*/
+		if(project_mutex!=NULL)
+		{
+			if(xSemaphoreTake(project_mutex, (TickType_t) 100)==pdTRUE)
+			{
 
-		//DMA_One_Shot_Transfer(ADC_Buff->buffer, DSP_Buff->buffer);
+				xSemaphoreGive(project_mutex);
 
-		destroy_buffer(ADC_Buff);
+				DAC_time_call();
+			}
+		}
+
+		vTaskDelay(100);
 	}
+}
+
+/*
+ * Function Name - AdcTask
+ * Description - FreeRTOS Task to periodically (every .1 seconds)
+ * read the value on DAC0 via ADC0 and initialize DMA once 64 samples collected in queue.
+ * Inputs - pointer to void
+ * Return Value - none
+ *
+ * ref: freeRtos SDK example: frdmkl25z_rtos_examples_freertos_generic
+ */
+
+void AdcTask(void* pointer)
+{
+	PRINTF("\r\nLOG_DEBUG, ADC_TASK, Entered in ADC Task");
+
+
+	while(1)
+	{
+
+		adc_read_counter++;
+
+
+		if(adc_read_counter > 4)
+		{
+			xSemaphoreGive( project_mutex );
+		}
+
+		adc_read_val = READ_ADC();
+
+		/* Send adc read value. Wait for 100 ticks for space to become available if necessary. */
+
+		if((xQueueSend(ADC_Buff,(void *)&adc_read_val,100) != pdPASS))
+		{
+
+			adc_read_counter = 0;
+
+			xSemaphoreTake(project_mutex, (TickType_t) 100);
+
+			LED_BLUE();
+
+			PRINTF("\r\nLOG_DEBUG, ADC_TASK, DMA Transfer is Initialized");
+
+			DMA_One_Shot_Transfer(ADC_Buff->pcHead, DSP_Buff, 64);
+
+			xQueueReset(ADC_Buff);
+
+			LED_OFF();
+
+			xTaskCreate(calculate,( portCHAR *)"calculate", configMINIMAL_STACK_SIZE, NULL, 1, &DSPHandle);
+		}
+
+		vTaskDelay(100);
+	}
+
+
+}
+
+/*
+ * Function Name - calculate
+ * Description - FreeRTOS Task to trigger by interrupt received once DMA is completed.
+ * Inputs - pointer to void
+ * Return Value - none
+ */
+
+void calculate(void* pointer)
+{
+	PRINTF("\r\nLOG_DEBUG, ADC_TASK, DMA Transfer is Completed");
+	time_stamp();
+
+	while(1)
+	{
+		dsp_calculation();
+
+		counter++;
+
+		if(counter > 4)
+		{
+
+			vTaskEndScheduler();
+		}
+
+		vTaskSuspend(NULL);
+	}
+}
+
+/*
+ * Function Name - dsp_calculation
+ * Description - Function for floating point calculation of volatage levels received after DMA
+ * Inputs - none
+ * Return Value - none
+ */
+
+
+void dsp_calculation()
+{
+	addition=0;
+
+	for(int index_1 = 0; index_1<64; index_1++)
+	{
+		if(DSP_Buff[index_1] > maxV)
+		{
+			maxV = DSP_Buff[index_1];
+		}
+		if(DSP_Buff[index_1] < minV)
+		{
+			minV = DSP_Buff[index_1];
+		}
+
+		number[index_1] = DSP_Buff[index_1]* RSL;
+
+		addition+=DSP_Buff[index_1];
+	}
+
+	minimum_val = minV*RSL;
+
+	maximum_val = maxV*RSL;
+
+	average_val = addition*RSL/64.0;
+
+	float St_Deviation = 0.0f;
+
+	for(int index_2=0; index_2 < 64; index_2++)
+	{
+		St_Deviation += powf((number[index_2] - average_val), 2);
+	}
+
+	St_deviation_val = sqrtf(St_Deviation/64.0);
+
+	Log(LOG_DEBUG, CALCULATE,"*****Generating DSP Report*****");
+
+	PRINTF("\r\nMinimum Value : %f\r\nMaximum Value : %f\r\nAverage Value : %f\r\nStandard Deviation : %f",minimum_val,maximum_val,average_val, St_deviation_val);
+
+	Log(LOG_DEBUG, CALCULATE,"******DSP Report Generated*****");
+
 }

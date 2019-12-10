@@ -1,0 +1,9 @@
+RingBuffer.c:9:18:RingBuffer_Constructor	32	static
+RingBuffer.c:32:8:RingBuffer_getSize	24	static
+RingBuffer.c:37:14:RingBuffer_push	32	static
+RingBuffer.c:84:14:RingBuffer_pop	24	static
+RingBuffer.c:106:9:RingBuffer_peek	24	static
+RingBuffer.c:120:6:RingBuffer_isFull	24	static
+RingBuffer.c:133:6:RingBuffer_isEmpty	24	static
+RingBuffer.c:145:6:RingBuffer_isInitialized	24	static
+RingBuffer.c:150:6:RingBuffer_destroy	24	static

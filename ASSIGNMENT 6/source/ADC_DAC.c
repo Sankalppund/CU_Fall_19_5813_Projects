@@ -3,6 +3,8 @@
  *
  *  Created on: Dec 1, 2019
  *      Author: sankalp pund & saket penurkar
+ *
+ *        ref 1 : Example code under demo_apps called dac_adc
  */
 
 /*Header File*/
@@ -24,7 +26,12 @@ static adc16_config_t adc_config_struct;
 static dac_config_t dac_config_struct;
 
 
-
+/*
+ * Function Name - ADC_INIT
+ * Description - Initialization of ADC
+ * Inputs - none
+ * Return Value - none
+ */
 
 void ADC_INIT()
 {
@@ -35,6 +42,8 @@ void ADC_INIT()
 	/* Make sure the software trigger is used. */
 	ADC16_EnableHardwareTrigger(ADC0, false);
 
+	ADC16_DoAutoCalibration(ADC0);
+
 	/* Prepare ADC channel setting */
 	adc_channel_struct.channelNumber = 0U;
 
@@ -42,9 +51,14 @@ void ADC_INIT()
 }
 
 
+/*
+ * Function Name - DAC_INIT
+ * Description - Initialization of DAC
+ * Inputs - none
+ * Return Value - none
+ */
 void DAC_INIT()
 {
-
 
 	DAC_GetDefaultConfig(&dac_config_struct);
 
@@ -57,8 +71,13 @@ void DAC_INIT()
 	DAC_SetBufferReadPointer(DAC0, 0);
 }
 
-
-uint32_t READ_ADC()
+/*
+ * Function Name - READ_ADC
+ * Description - Reads the value from the channel and return the ADC value
+ * Inputs - none
+ * Return Value - ADC_Value
+ */
+uint16_t READ_ADC()
 {
 	ADC16_SetChannelConfig(ADC0, 0U, &adc_channel_struct);
 
@@ -69,10 +88,19 @@ uint32_t READ_ADC()
 
 	/* Gets the conversion value.*/
 
-	return ADC16_GetChannelConversionValue(ADC0, 0);
+	return (uint16_t)ADC16_GetChannelConversionValue(ADC0, 0);
 }
 
-void WRITE_DAC(uint32_t Data)
+
+/*
+ * Function Name - WRITE_DAC
+ * Description - Takes the value and writes it over the DAC
+ * Inputs - none
+ * Return Value - none
+ */
+void WRITE_DAC(uint16_t Data)
 {
+
 	DAC_SetBufferValue(DAC0, 0, Data);
+
 }

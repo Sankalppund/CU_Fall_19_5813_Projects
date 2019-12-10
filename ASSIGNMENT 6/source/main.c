@@ -26,68 +26,121 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * Authors: Sankalp Pund & Saket Penurkar
+ *
+ * ref : freeRtos SDK example: frdmkl25z_rtos_examples_freertos_generic
  */
 
-/* FreeRTOS kernel includes. */
-#include "FreeRTOS.h"
-#include "task.h"
-#include "queue.h"
-#include "timers.h"
-
-/* Freescale includes. */
-#include "fsl_device_registers.h"
-#include "fsl_debug_console.h"
-#include "board.h"
-
-#include "pin_mux.h"
-
-/********************************************************/
-#include "circular_buffer.h"
-#include "frts_task.h"
-#include "dma.h"
-/*******************************************************/
-
-/*******************************************************************************
- * Definitions
- ******************************************************************************/
-
-/* Task priorities. */
-#define hello_task_PRIORITY (configMAX_PRIORITIES - 1)
-/*******************************************************************************
- * Prototypes
- ******************************************************************************/
-static void hello_task(void *pvParameters);
-
-/*******************************************************************************
- * Code
- ******************************************************************************/
-/*!
- * @brief Application entry point.
+/*
+ * Includes
  */
+#include "main.h"
+
+/*
+ * Globals
+ */
+SemaphoreHandle_t project_mutex;
+QueueHandle_t ADC_Buff;
+QueueHandle_t dspBuffer;
+
 int main(void)
 {
-    /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    gen_sin_sample();
-    xTaskCreate(hello_task, "Hello_task", configMINIMAL_STACK_SIZE + 10, NULL, hello_task_PRIORITY, NULL);
 
-    /* Create two normal tasks here and then create one task which will be called on interrupt */
-    vTaskStartScheduler();
-    for (;;)
-        ;
+#if (LOG_ENABLE == 1)
+
+	Log_enable();   /*  Calling this function to enable logging */
+
+	/** Set the LOG_LEVEL **/
+	/** Pass LOG_DEBUG to run the DEBUG and STATUS log statements **/
+	/** Pass LOG_TEST to run all the log statements **/
+	/** Pass LOG_STATUS to run the STATUS log statements **/
+	Log_level(LOG_DEBUG);
+
+#endif
+#if (PROGRAM_1 == 1)
+
+	//Log(LOG_DEBUG, MAIN, "Initializing Program 1");
+
+	TimerHandle_t DAC_TimerHandle = NULL;
+	TimerHandle_t GET_TICKSHandle = NULL;
+	GET_TICKSHandle = xTimerCreate("TICK", (100 / portTICK_PERIOD_MS), pdTRUE, 0, get_ticks);
+
+	BOARD_InitBootPins();
+	BOARD_InitBootClocks();
+	BOARD_InitBootPeripherals();
+	/* Init FSL debug console. */
+	BOARD_InitDebugConsole();
+
+	/* Initialize the DAC0*/
+	DAC_INIT();
+
+	/* Generate Sine Wave and store in lookup table*/
+	gen_sin_sample();
+
+	LED_OFF();
+
+	/*Create Software Timer*/
+	DAC_TimerHandle = xTimerCreate("DAC_Write_Timer", (1000 / portTICK_PERIOD_MS), pdTRUE, 0, DAC_time_callback);
+
+	xTimerStart(DAC_TimerHandle, 0);
+	xTimerStart(GET_TICKSHandle, 0);
+
+	vTaskStartScheduler();
+
+	while(1)
+	{
+
+	}
+
+
+#endif
+
+#if(PROGRAM_2 == 1)
+
+	//Log(LOG_DEBUG, MAIN, "Initializing Program 2");
+
+	BOARD_InitBootPins();
+	BOARD_InitBootClocks();
+	BOARD_InitBootPeripherals();
+	/* Init FSL debug console. */
+	BOARD_InitDebugConsole();
+
+	/* Generate Sine Wave and store in lookup table*/
+	gen_sin_sample();
+
+	/* Initialize the ADC0*/
+	ADC_INIT();
+
+	/* Initialize the DAC0*/
+	DAC_INIT();
+
+	/* Initialize the DMA0*/
+	DMA_Initialize();
+
+	project_mutex = xSemaphoreCreateMutex();
+
+	/* Initializes the Queues*/
+
+	ADC_Buff = xQueueCreate(64,sizeof(uint16_t));
+
+	/* Creating Tasks 1*/
+	xTaskCreate(DacTask,(portCHAR*)"DacTask", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
+
+	/* Creating Tasks 2*/
+	xTaskCreate(AdcTask,(portCHAR*)"AdcTask", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
+
+	vTaskStartScheduler();
+
+	while (1)
+	{
+
+	}
+
+
+#endif
+
 
 }
 
-/*!
- * @brief Task responsible for printing of "Hello world." message.
- */
-static void hello_task(void *pvParameters)
-{
-    for (;;)
-    {
-        PRINTF("Hello world.\r\n");
-        vTaskSuspend(NULL);
-    }
-}
+

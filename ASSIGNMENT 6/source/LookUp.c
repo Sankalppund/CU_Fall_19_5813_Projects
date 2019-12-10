@@ -20,6 +20,12 @@ uint32_t lookup_table[SIN_SAMPLES] = {0};
   */
 const static float Volt_Conv = (SE_12BIT/REF_BOARD_VOL);
 
+/*
+ * Function Name - gen_sin_sample
+ * Description - This function generates sine wave samples and stores in lookup table .
+ * Inputs - none
+ * Return Value - none
+ */
 
 void gen_sin_sample()
 {
@@ -28,11 +34,15 @@ void gen_sin_sample()
 	{
 		lookup_table[sample] = (sin((2.0 * PI * (sample/(float)(SIN_SAMPLES)))) + OFFSET_VOL)*Volt_Conv;
 	}
-	for(int sample=0; sample<SIN_SAMPLES; sample++)
-		{
-			PRINTF("\r\n%d",lookup_table[sample]);
-		}
+
 }
+
+/*
+ * Function Name - inc_sin_wave
+ * Description - This function returns sample value from lookup table one by one.
+ * Inputs - none
+ * Return Value - uint32_t
+ */
 
 uint32_t inc_sin_wave()
 {

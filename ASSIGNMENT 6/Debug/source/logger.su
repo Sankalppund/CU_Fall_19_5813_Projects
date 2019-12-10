@@ -1,8 +1,8 @@
-logger.c:33:6:Log_enable	8	static
-logger.c:44:6:Log_disable	8	static
-logger.c:56:6:Log_status	8	static
-logger.c:75:6:Log_level	16	static
-logger.c:101:6:Log	56	static
-logger.c:173:13:Function_Printed_in_Log	104	static
-logger.c:316:6:Log_integer	16	static
-logger.c:333:6:time_stamp	64	static
+logger.c:34:6:Log_enable	8	static
+logger.c:45:6:Log_disable	8	static
+logger.c:57:6:Log_status	8	static
+logger.c:76:6:Log_level	16	static
+logger.c:102:6:Log	56	static
+logger.c:174:13:Function_Printed_in_Log	96	static
+logger.c:306:6:Log_integer	16	static
+logger.c:322:6:time_stamp	64	static

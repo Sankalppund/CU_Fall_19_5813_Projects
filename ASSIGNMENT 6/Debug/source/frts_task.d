@@ -9,11 +9,14 @@ source/frts_task.o source/frts_task.d: ../source/frts_task.c \
  ../source/LookUp.h ../source/ADC_DAC.h ../board/board.h \
  ../board/clock_config.h ../drivers/fsl_gpio.h ../drivers/fsl_dac.h \
  ../drivers/fsl_adc16.h ../board/pin_mux.h ../board/clock_config.h \
- ../freertos/FreeRTOS.h ../source/FreeRTOSConfig.h ../freertos/projdefs.h \
+ ../source/ss_led_control.h ../freertos/FreeRTOS.h \
+ ../freertos/FreeRTOSConfig.h ../freertos/projdefs.h \
  ../freertos/portable.h ../freertos/deprecated_definitions.h \
- ../freertos/portmacro.h ../freertos/mpu_wrappers.h ../freertos/timers.h \
- ../freertos/task.h ../freertos/list.h ../source/dma.h \
- ../drivers/fsl_dmamux.h ../drivers/fsl_dma.h
+ ../freertos/portmacro.h ../freertos/mpu_wrappers.h ../freertos/semphr.h \
+ ../freertos/queue.h ../freertos/list.h ../freertos/timers.h \
+ ../freertos/task.h ../source/dma.h ../drivers/fsl_dmamux.h \
+ ../drivers/fsl_dma.h ../source/main.h ../freertos/task.h \
+ ../freertos/queue.h
 
 ../source/frts_task.h:
 
@@ -65,9 +68,11 @@ source/frts_task.o source/frts_task.d: ../source/frts_task.c \
 
 ../board/clock_config.h:
 
+../source/ss_led_control.h:
+
 ../freertos/FreeRTOS.h:
 
-../source/FreeRTOSConfig.h:
+../freertos/FreeRTOSConfig.h:
 
 ../freertos/projdefs.h:
 
@@ -79,14 +84,24 @@ source/frts_task.o source/frts_task.d: ../source/frts_task.c \
 
 ../freertos/mpu_wrappers.h:
 
+../freertos/semphr.h:
+
+../freertos/queue.h:
+
+../freertos/list.h:
+
 ../freertos/timers.h:
 
 ../freertos/task.h:
-
-../freertos/list.h:
 
 ../source/dma.h:
 
 ../drivers/fsl_dmamux.h:
 
 ../drivers/fsl_dma.h:
+
+../source/main.h:
+
+../freertos/task.h:
+
+../freertos/queue.h:

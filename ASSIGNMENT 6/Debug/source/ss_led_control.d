@@ -6,7 +6,7 @@ source/ss_led_control.o source/ss_led_control.d: \
  ../CMSIS/MKL25Z4_features.h ../drivers/fsl_clock.h \
  ../drivers/fsl_common.h ../drivers/fsl_gpio.h ../board/peripherals.h \
  ../board/pin_mux.h ../board/clock_config.h ../CMSIS/MKL25Z4.h \
- ../drivers/fsl_rtc.h ../source/ss_led_control.h
+ ../source/ss_led_control.h
 
 ../board/board.h:
 
@@ -43,7 +43,5 @@ source/ss_led_control.o source/ss_led_control.d: \
 ../board/clock_config.h:
 
 ../CMSIS/MKL25Z4.h:
-
-../drivers/fsl_rtc.h:
 
 ../source/ss_led_control.h:

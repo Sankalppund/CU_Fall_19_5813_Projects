@@ -12,10 +12,14 @@
 
 #include "Systick_timer.h"
 #include "MKL25Z4.h"
+#include "fsl_debug_console.h"
+
 
 /* Global Variables*/
 
-uint64_t system_tick = 0;
+uint32_t system_tick;
+
+extern uint32_t cnt;
 
 uint64_t max_time = ~0;
 
@@ -48,10 +52,10 @@ void Init_SysTick(void)
  * Return Value - none
  */
 
-void SysTick_Handler()
-{
-	system_tick++;
-}
+//void SysTick_Handler()
+//{
+//	system_tick++;
+//}
 
 
 /*
@@ -63,6 +67,9 @@ void SysTick_Handler()
 
 uint32_t current_time()
 {
-	return system_tick;
+	//PRINTF("Systick Count %d",system_tick);
+//	system_tick = xTaskGetTickCount();
+//	return system_tick;
+	return cnt;
 }
 

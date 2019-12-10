@@ -8,11 +8,16 @@
 #ifndef LOOKUP_H_
 #define LOOKUP_H_
 
+/*Header File*/
 
 #include<math.h>
 #include"fsl_debug_console.h"
 
+/* Global Variables*/
+
 uint32_t inc = 0;
+
+/* Macros */
 
 #define SIN_SAMPLES (50)
 
@@ -25,7 +30,7 @@ uint32_t inc = 0;
 #define SE_12BIT (4096.0)
 
 
-
+/* Function Prototype*/
 
 void gen_sin_sample();
 

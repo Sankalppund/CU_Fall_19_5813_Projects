@@ -1,0 +1,9 @@
+logger.c:20:14:Logger_Constructor	24	static
+logger.c:36:6:Logger_enable	24	static
+logger.c:41:6:Logger_disable	24	static
+logger.c:46:15:Logger_status	24	static
+logger.c:51:6:Logger_logData	40	static
+logger.c:69:6:Logger_logTime	40	static
+logger.c:77:6:Logger_logString	32	static
+logger.c:89:6:Logger_logInt	40	static
+logger.c:100:13:getLevelString	16	static

@@ -21,6 +21,7 @@ Logging_Level_m LogLevel;
 Function_Name_m FunctioName;
 char MessageToBeLogged[100]={0};
 static uint8_t Level_for_Logging = 0;
+extern uint32_t cnt;
 
 
 /*
@@ -114,19 +115,19 @@ void Log(Logging_Level_m level, Function_Name_m Function_Name, const char * mess
 			{
 				const char * ActiveFunc = Function_Printed_in_Log(Function_Name);
 				sprintf(MessageToBeLogged, "\r\n%s: %s: %s: %s ", "LOG_TEST", ActiveFunc, "Test Message-", message);
-				print_string(MessageToBeLogged);
+				PRINTF(MessageToBeLogged);
 			}
 			if (LOG_DEBUG == level)
 			{
 				const char * ActiveFunc = Function_Printed_in_Log(Function_Name);
 				sprintf(MessageToBeLogged, "\r\n%s: %s: %s: %s ", "LOG_DEBUG", ActiveFunc, "Debug Message-", message);
-				print_string(MessageToBeLogged);
+				PRINTF(MessageToBeLogged);
 			}
 			if (LOG_STATUS == level)
 			{
 				const char * ActiveFunc = Function_Printed_in_Log(Function_Name);
 				sprintf(MessageToBeLogged, "\r\n%s: %s: %s: %s ", "LOG_STATUS", ActiveFunc, "Status Message-" , message);
-				print_string(MessageToBeLogged);
+				PRINTF(MessageToBeLogged);
 			}
 
 			break;
@@ -137,13 +138,13 @@ void Log(Logging_Level_m level, Function_Name_m Function_Name, const char * mess
 			{
 				const char * ActiveFunc = Function_Printed_in_Log(Function_Name);
 				sprintf(MessageToBeLogged, "\r\n%s: %s: %s: %s ", "LOG_DEBUG", ActiveFunc, "Debug Message-", message);
-				print_string(MessageToBeLogged);
+				PRINTF(MessageToBeLogged);
 			}
 			if (LOG_STATUS == level)
 			{
 				const char * ActiveFunc = Function_Printed_in_Log(Function_Name);
 				sprintf(MessageToBeLogged, "\r\n%s: %s: %s: %s ", "LOG_STATUS", ActiveFunc, "Status Message-" , message);
-				print_string(MessageToBeLogged);
+				PRINTF(MessageToBeLogged);
 			}
 
 			break;
@@ -154,7 +155,7 @@ void Log(Logging_Level_m level, Function_Name_m Function_Name, const char * mess
 			{
 				const char * ActiveFunc = Function_Printed_in_Log(Function_Name);
 				sprintf(MessageToBeLogged, "\r\n%s: %s: %s: %s ", "LOG_STATUS", ActiveFunc, "Status Message-" , message);
-				print_string(MessageToBeLogged);
+				PRINTF(MessageToBeLogged);
 			}
 
 			break;
@@ -178,21 +179,105 @@ const char* Function_Printed_in_Log(Function_Name_m FuncName)
 		return Function_char;
 	}
 
-	if (ADD_NEW == FuncName)
+	if (ADC_INIT_FUNC == FuncName)
 	{
-		char * Function_char = "Function_Add_New";
+		char * Function_char = "Function_ADC_Init";
 		return Function_char;
 	}
 
-	if (APPLICATION_REPORT == FuncName)
+	if (ADC_TASK == FuncName)
 	{
-		char * Function_char = "Function_Application_Report";
+		char * Function_char = "Thread_ADC_Task";
 		return Function_char;
 	}
 
-	if (CHAR_COUNT == FuncName)
+	if (DAC_INIT_FUNC == FuncName)
 	{
-		char * Function_char = "Function_Char_Count";
+		char * Function_char = "Function_DAC_Init";
+		return Function_char;
+	}
+
+	if (DAC_TASK == FuncName)
+	{
+		char * Function_char = "Thread_DAC_Task";
+		return Function_char;
+	}
+
+	if (READ_ADC_FUNC == FuncName)
+	{
+		char * Function_char = "Function_Read_ADC";
+		return Function_char;
+	}
+
+	if (WRITE_DAC_FUNC == FuncName)
+	{
+		char * Function_char = "Function_Write_DAC";
+		return Function_char;
+	}
+
+	if (DMA_CALLBACK == FuncName)
+	{
+		char * Function_char = "Function_DMA_Callback";
+		return Function_char;
+	}
+
+	if (DMA_INITIALIZE == FuncName)
+	{
+		char * Function_char = "Function_DMA_Initialize";
+		return Function_char;
+	}
+
+	if (DMA_ONE_SHOT_TRANSFER == FuncName)
+	{
+		char * Function_char = "Function_DMA_One_Shot_Transfer";
+		return Function_char;
+	}
+
+	if (GEN_SINE_SAMPLE == FuncName)
+	{
+		char * Function_char = "Function_Gen_Sine_Sample";
+		return Function_char;
+	}
+
+	if (INC_SINE_WAVE == FuncName)
+	{
+		char * Function_char = "Function_Inc_Sine_Wave";
+		return Function_char;
+	}
+
+	if (LED_INITIALIZE == FuncName)
+	{
+		char * Function_char = "Function_Led_Initialize";
+		return Function_char;
+	}
+
+	if (LED_OFF_FUNC == FuncName)
+	{
+		char * Function_char = "Function_LED_Off";
+		return Function_char;
+	}
+
+	if (LED_DELAY == FuncName)
+	{
+		char * Function_char = "Function_LED_Delay";
+		return Function_char;
+	}
+
+	if (LED_RED_FUNC == FuncName)
+	{
+		char * Function_char = "Function_LED_Red";
+		return Function_char;
+	}
+
+	if (LED_GREEN_FUNC == FuncName)
+	{
+		char * Function_char = "Function_LED_Green";
+		return Function_char;
+	}
+
+	if (LED_BLUE_FUNC == FuncName)
+	{
+		char * Function_char = "Function_LED_Blue";
 		return Function_char;
 	}
 
@@ -202,107 +287,12 @@ const char* Function_Printed_in_Log(Function_Name_m FuncName)
 		return Function_char;
 	}
 
-	if (INITIALIZE_BUFFER == FuncName)
+	if (CALCULATE == FuncName)
 	{
-		char * Function_char = "Function_Initialize_Buffer";
+		char * Function_char = "Function_Calculate";
 		return Function_char;
 	}
 
-	if (REMOVE_OLD == FuncName)
-	{
-		char * Function_char = "Function_Remove_Old";
-		return Function_char;
-	}
-
-	if (BUFFER_FULL_CHECK == FuncName)
-	{
-		char * Function_char = "Function_Buffer_Full_Check";
-		return Function_char;
-	}
-
-	if (BUFFER_EMPTY_CHECK == FuncName)
-	{
-		char * Function_char = "Function_Buffer_Empty_Check";
-		return Function_char;
-	}
-
-	if (DESTROY_BUFFER == FuncName)
-	{
-		char * Function_char = "Function_Destroy_Buffer";
-		return Function_char;
-	}
-
-	if (BUFFER_VALIDATION == FuncName)
-	{
-		char * Function_char = "Function_Buffer_Validation";
-		return Function_char;
-	}
-
-	if (RESIZE_BUFFER == FuncName)
-	{
-		char * Function_char = "Function_Resize_Buffer";
-		return Function_char;
-	}
-
-	if (INIT_UART0 == FuncName)
-	{
-		char * Function_char = "Function_Init_Uart0";
-		return Function_char;
-	}
-
-	if (UART_TRANSMIT == FuncName)
-	{
-		char * Function_char = "Function_Uart_Transmit";
-		return Function_char;
-	}
-
-	if (UART_RECEIVE == FuncName)
-	{
-		char * Function_char = "Function_Uart_Receive";
-		return Function_char;
-	}
-
-	if (TRANSMITTER_WAIT == FuncName)
-	{
-		char * Function_char = "Function_Transmitter_Wait";
-		return Function_char;
-	}
-
-	if (RECEIVER_WAIT == FuncName)
-	{
-		char * Function_char = "Function_Receiver_Wait";
-		return Function_char;
-	}
-
-	if (POLLING_ECHO == FuncName)
-	{
-		char * Function_char = "Function_Polling_Echo";
-		return Function_char;
-	}
-
-	if (POLLING_APPLICATION == FuncName)
-	{
-		char * Function_char = "Function_Polling_Application";
-		return Function_char;
-	}
-
-	if (INTERRUPT_ECHO == FuncName)
-	{
-		char * Function_char = "Function_Interrupt_Echo";
-		return Function_char;
-	}
-
-	if (INTERRUPT_APPLICATION == FuncName)
-	{
-		char * Function_char = "Function_Interrupt_Application";
-		return Function_char;
-	}
-
-	if (BUFFER_EMPTY_CHECK == FuncName)
-	{
-		char * Function_char = "Function_Buffer_Empty_Check";
-		return Function_char;
-	}
 }
 
 
@@ -317,8 +307,7 @@ void Log_integer(int Int_Var)
 {
 	if (log_var == true)
 	{
-		// ********** to be updated ******/
-		//print_string(string)("%d\n",Int_Var);
+
 	}
 }
 
@@ -335,6 +324,7 @@ void time_stamp()
 	char time_buff[14] = {0};
 
 	uint32_t current_t = current_time();
+	//uint32_t current_t = cnt;
 
 	float n = (current_t/10);
 
@@ -344,8 +334,8 @@ void time_stamp()
 
 	uint32_t SS = (uint32_t)n%60;
 
-	sprintf(time_buff, "\n%02d:%02d:%02d.%1d \n", HH, MM, SS, current_t%10);
+	sprintf(time_buff, "\r\n%02d:%02d:%02d.%1d \n", HH, MM, SS, current_t%10);
 
-	print_string(time_buff);
+	PRINTF(time_buff);
 
 }

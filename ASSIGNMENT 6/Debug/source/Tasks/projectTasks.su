@@ -1,0 +1,6 @@
+fsl_adc16.h:500:24:ADC16_GetChannelConversionValue	16	static
+fsl_dma.h:558:20:DMA_StartTransfer	16	static
+projectTasks.c:40:6:updateTime	16	static
+projectTasks.c:65:6:updateDAC	24	static
+projectTasks.c:96:6:readADC	40	static
+projectTasks.c:139:6:doDSP	80	static

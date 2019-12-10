@@ -14,7 +14,7 @@
 #include "clock_config.h"
 #include "MKL25Z4.h"
 #include "fsl_gpio.h"
-#include "fsl_rtc.h"
+//#include "fsl_rtc.h"
 #include "ss_led_control.h"
 
 /*
@@ -122,5 +122,5 @@ void LED_BLUE()
 	GPIO_SetPinsOutput(BOARD_LED_GPIO_R, 1u << BOARD_LED_GPIO_PIN_R);
 	GPIO_SetPinsOutput(BOARD_LED_GPIO_G, 1u << BOARD_LED_GPIO_PIN_G);
 	GPIO_ClearPinsOutput(BOARD_LED_GPIO_B, 1u << BOARD_LED_GPIO_PIN_B);
-	delay(100);
+	delay(1000);
 }

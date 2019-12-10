@@ -75,6 +75,10 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "fsl_tickless_generic.h"
+#include "fsl_debug_console.h"
+
+
+//uint32_t system_tick = 0;
 
 extern uint32_t SystemCoreClock; /* in Kinetis SDK, this contains the system core clock speed */
 
@@ -333,6 +337,7 @@ void xPortPendSVHandler( void )
 
 void xPortSysTickHandler( void )
 {
+
 uint32_t ulPreviousMask;
 
 	ulPreviousMask = portSET_INTERRUPT_MASK_FROM_ISR();
@@ -345,6 +350,8 @@ uint32_t ulPreviousMask;
 		}
 	}
 	portCLEAR_INTERRUPT_MASK_FROM_ISR( ulPreviousMask );
+
+	//system_tick++;
 }
 /*-----------------------------------------------------------*/
 
