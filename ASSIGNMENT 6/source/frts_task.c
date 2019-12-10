@@ -6,6 +6,8 @@
  *
  *  ref: freeRtos SDK example: sample_sw_timer_callback_rtos_examples_freertos_swtimer
  *  ref: freeRtos SDK example: frdmkl25z_rtos_examples_freertos_generic
+ *  ref: https://stackoverflow.com/questions/44975229/max-min-avg-function-for-an-array-in-c
+ *  ref: https://www.sanfoundry.com/c-program-mean-variance-standard-deviation/
  *
  */
 
@@ -223,6 +225,8 @@ void calculate(void* pointer)
  * Description - Function for floating point calculation of volatage levels received after DMA
  * Inputs - none
  * Return Value - none
+ * ref 1: https://stackoverflow.com/questions/44975229/max-min-avg-function-for-an-array-in-c
+ * ref 2: https://www.sanfoundry.com/c-program-mean-variance-standard-deviation/
  */
 
 

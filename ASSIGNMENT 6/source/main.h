@@ -2,7 +2,7 @@
  * main.h
  *
  *  Created on: Dec 1, 2019
- *      Author: sanka
+ *      Author: sankalp pund and saket penurkar
  */
 
 #ifndef MAIN_H_
