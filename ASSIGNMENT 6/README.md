@@ -1,5 +1,5 @@
 
-####### **PES Project 6 Readme** 
+**PES Project 6 Readme** 
 
 
 ## TEAM MEMBERS :      
