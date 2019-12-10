@@ -49,9 +49,9 @@ mcu-expresso serial terminal is used, Program 1 and Program 2 Mode were tested a
 
 •	If you want to run Program 2 code, #define PROGRAM_2 to (1) in main.h file otherwise change it to (0).
 
-•	If you want to run the code in the test mode, for running the test scripts, #define TEST_MODE (1) in the main.h otherwise change it to (0)
+•	If you want to run the code in the test mode, for running the test scripts, #define TEST_MODE (1) in the main.h otherwise change it to (0).
 
-•	If you want to enable logging, write the #define value (1) to LOG_ENABLE macro in main.h
+•	If you want to enable logging, write the #define value (1) to LOG_ENABLE macro in main.h file.
 
 •	For logging functionalities, please follow the respective enums in the logger.h file. For Log level setting, use the enums in Logging_level_m. For functions’ enum, use the enum stated in the Function_Name_m.
 
